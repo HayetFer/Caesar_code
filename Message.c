@@ -72,11 +72,15 @@ char shift(char c, int k) {
 void do_cesar (struct Message * msg, int k, struct Message* res){
     int a = msg->taille;
     alloueMsg(res, a);
-    for(int i =0;i<16; i++){
+    int i = 0;
+    do{
         res->texte[i]=shift(msg->texte[i],k);
     }
-
+        
+    while(msg->texte[i++]!='\0');
+   
 }
+
 
 
 
