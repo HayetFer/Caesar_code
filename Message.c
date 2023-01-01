@@ -23,7 +23,7 @@ void freeMsg(struct Message *msg){
 void copieMsg(struct Message *msg, struct Message *copie){
     
     alloueMsg(copie, msg->taille);
-    copie->texte=msg->texte;
+    strcpy(copie->texte,msg->texte);
 }
 //--------------------3
 
@@ -33,7 +33,7 @@ void copieMsg(struct Message *msg, struct Message *copie){
     int a = msg->taille;
    char* cpy=malloc(sizeof(char)*a);
    int i,j;
-    for(i=0,j=0;i<25;i++){
+    for(i=0,j=0;i<a;i++){
         if((65 <= msg->texte[i] && msg->texte[i] <= 90) || (97 <= msg->texte[i] && msg->texte[i] <= 122)){
         cpy[j]=msg->texte[i];
         j++;
@@ -48,57 +48,38 @@ void copieMsg(struct Message *msg, struct Message *copie){
 
  
 //--------------------b
-//---------A FINIR 
-char shift (char c, int k){
-    
-    char g = ' ';
-    if('A'<=c<='Z'){
+char shift(char c, int k) {
+    if (c >= 'a' && c <= 'z') {
         
-        
-        if('A'<= (c + k) && (c+k)<='Z' ){
-       // printf("%d" , c+k);
-        g = c + k;
-        return g;
-        
-    }
-    else if((c + k)>'Z'){
-       
-        while(c<91){
-           // printf(" \n al \n");
-            c++;
-            k--;
+        int shift = (c - 'a' + k) % 26;
+        printf("%d" , shift);
+        if (shift < 0) {
+            shift += 26;
         }
-        c='A';
-       
-        shift(c,k);
-    }
-    }
-
-    if('a'<=c<='z'){
+        return 'a' + shift;
+    } else if (c >= 'A' && c <= 'Z') {
         
-        
-        if('a'<= (c + k) && (c+k)<='z' ){
-        printf("%d" , c+k);
-        g = c + k;
-        return g;
-        
-    }
-    else if((c + k)>'z'){
-       
-        while(c<91){
-           // printf(" \n al \n");
-            c++;
-            k--;
+        int shift = (c - 'A' + k) % 26;
+        if (shift < 0) {
+            shift += 26;
         }
-        c='a';
-       
-        shift(c,k);
+        return 'A' + shift;
+    } else {
+        
+        return c;
     }
-    }
-
-    
-    return g;
 }
+void do_cesar (struct Message * msg, int k, struct Message* res){
+    int a = msg->taille;
+    alloueMsg(res, a);
+    for(int i =0;i<16; i++){
+        res->texte[i]=shift(msg->texte[i],k);
+    }
+
+}
+
+
+
 
 
 
@@ -108,12 +89,13 @@ int main(){
     strcpy(temp.texte , "hello my98 name is ");
     simplify(&temp);
     printf("%s" , temp.texte);
-    char c = 'v';
-    int b = 28; 
+    char c = 's';
+    int b = 3; 
     printf("\n");
     printf("%c \n",shift(c, b));
     struct Message temp2;
-    copieMsg(&temp, &temp2);
+    do_cesar(&temp, 3,&temp2);
+    printf("%s", temp2.texte);
     freeMsg(&temp);
     freeMsg(&temp2);
     return 0;
