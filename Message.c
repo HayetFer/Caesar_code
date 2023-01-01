@@ -1,4 +1,4 @@
-    //Problèmes de mémoire à corriger et de recursion dans shift a partir de 3 essais
+
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
