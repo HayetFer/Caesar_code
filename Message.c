@@ -52,7 +52,6 @@ char shift(char c, int k) {
     if (c >= 'a' && c <= 'z') {
         
         int shift = (c - 'a' + k) % 26;
-        printf("%d" , shift);
         if (shift < 0) {
             shift += 26;
         }
@@ -77,10 +76,11 @@ void do_cesar (struct Message * msg, int k, struct Message* res){
         res->texte[i]=shift(msg->texte[i],k);
     }
         
-    while(msg->texte[i++]!='\0');
+    while(msg->texte[++i]!='\0');
+    res->texte[i] = '\0';
+
    
 }
-
 
 
 
@@ -100,6 +100,7 @@ int main(){
     struct Message temp2;
     do_cesar(&temp, 3,&temp2);
     printf("%s", temp2.texte);
+    //printf("%ld",strlen(temp2.texte));
     freeMsg(&temp);
     freeMsg(&temp2);
     return 0;
