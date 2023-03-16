@@ -98,12 +98,7 @@
     
        
      }
-    
-    
-    
-    
-    
-    
+
     
     int main(){
         struct Message temp;
